@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ceasar Bot - Checkout Premium</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>body { background-color: #0f172a; color: white; font-family: sans-serif; }</style>
+    
+    <!-- O Script oficial do PayPal. Substitui 'O_TEU_CLIENT_ID_AQUI' pelo teu verdadeiro -->
+    <script src="https://www.paypal.com/sdk/js?client-id=AecodqpTkHgk-Zmqm86S1gajXSxnbtJ5TKmn7pphaocvdLOHa55KPritoyhTWX29UKqS-o66pFTECLFq&currency=EUR"></script>
+</head>
+<body class="flex items-center justify-center min-h-screen">
+
+    <div class="bg-gray-800 p-8 rounded-xl border border-gray-700 shadow-2xl max-w-md w-full text-center">
+        <h2 class="text-2xl font-bold mb-2">Comprar Premium (30 Dias)</h2>
+        <div class="text-4xl font-extrabold text-[#f59e0b] mb-6">€9.99</div>
+        
+        <p class="text-sm text-gray-400 mb-2">A renovar a licença para a conta:</p>
+        <!-- Esta caixa vai ser preenchida automaticamente pelo script -->
+        <div id="lobby-id-display" class="bg-gray-900 p-3 rounded font-mono text-green-400 mb-8 border border-gray-700 text-lg">
+            A carregar...
+        </div>
+
+        <!-- Aqui é onde os botões amarelos do PayPal vão aparecer -->
+        <div id="paypal-button-container"></div>
+        
+        <p class="text-xs text-gray-500 mt-6">O tempo será creditado automaticamente na tua conta assim que o pagamento for confirmado.</p>
+    </div>
+
+    <script>
+        // 1. Vai buscar o 'user' ao URL (ex: checkout.html?user=leewinga#MDL)
+        const urlParams = new URLSearchParams(window.location.search);
+        const lobbyId = urlParams.get('user');
+
+        if (!lobbyId) {
+            document.getElementById('lobby-id-display').innerText = "ERRO: Conta não identificada.";
+            document.getElementById('lobby-id-display').className = "bg-red-900 p-3 rounded font-mono text-white mb-8 border border-red-700 text-lg";
+        } else {
+            document.getElementById('lobby-id-display').innerText = lobbyId;
+
+            // 2. Renderiza os botões do PayPal
+            paypal.Buttons({
+                // Configura o pagamento
+                createOrder: function(data, actions) {
+                    return actions.order.create({
+                        purchase_units: [{
+                            amount: {
+                                value: '9.99' // O preço que definiste
+                            },
+                            description: "Ceasar Bot - Licença 30 Dias",
+                            custom_id: lobbyId // O MAIS IMPORTANTE: Passa o ID escondido para o teu Render!
+                        }]
+                    });
+                },
+                // O que acontece quando o pagamento for feito com sucesso no browser do cliente
+                onApprove: function(data, actions) {
+                    return actions.order.capture().then(function(details) {
+                        alert("Pagamento concluído com sucesso! Obrigado, " + details.payer.name.given_name + ".\n\nFaz refresh ao Travian e o teu bot estará verde!");
+                        window.location.href = "index.html"; // Volta à página inicial
+                    });
+                }
+            }).render('#paypal-button-container');
+        }
+    </script>
+</body>
+</html>
