@@ -13,16 +13,16 @@
                     colors: {
                         brand: {
                             light: '#fde68a',
-                            DEFAULT: '#f59e0b', // Laranja "Ouro Romano"
+                            DEFAULT: '#f59e0b', // Laranja Ouro
                             dark: '#d97706',
                         },
-                        dark: '#111827' // Fundo Escuro Moderno
+                        dark: '#111827'
                     }
                 }
             }
         }
     </script>
-    <!-- Fontes -->
+    <!-- Fontes e Ícones -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap');
@@ -53,12 +53,14 @@
             <p class="text-lg md:text-xl text-gray-400 mb-10 max-w-2xl mx-auto">
                 O bot mais seguro, rápido e inteligente para Travian. Farm, construção e evasão a correr 24/7 diretamente no teu browser. Sem detecções.
             </p>
-            <div class="flex flex-col sm:flex-row justify-center gap-4">
-                <!-- Botão de Instalação (Muda o Href para o link do teu script Raw do Tampermonkey) -->
-                <a href="LINK_PARA_O_TEU_SCRIPT.user.js" class="bg-brand hover:bg-brand-dark text-white font-bold py-4 px-8 rounded-lg text-lg transition shadow-lg shadow-brand/30 flex items-center justify-center gap-3">
+            <div class="flex flex-col sm:flex-row justify-center items-center gap-4">
+                
+                <!-- Botão de Instalação com Ofuscação de Link (Usa Javascript) -->
+                <button onclick="iniciarInstalacao()" class="bg-brand hover:bg-brand-dark text-white font-bold py-4 px-8 rounded-lg text-lg transition shadow-lg shadow-brand/30 flex items-center justify-center gap-3 w-full sm:w-auto">
                     <i class="fa-solid fa-download"></i> Instalar Agora Grátis
-                </a>
-                <a href="#how-it-works" class="bg-gray-800 hover:bg-gray-700 text-white font-bold py-4 px-8 rounded-lg text-lg transition border border-gray-700">
+                </button>
+                
+                <a href="#how-it-works" class="bg-gray-800 hover:bg-gray-700 text-white font-bold py-4 px-8 rounded-lg text-lg transition border border-gray-700 w-full sm:w-auto text-center">
                     Saber Mais
                 </a>
             </div>
@@ -72,7 +74,6 @@
             <h2 class="text-3xl font-bold text-center mb-16 text-white">Criado para Vencer</h2>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
                 
-                <!-- Feature 1 -->
                 <div class="bg-gray-800 p-8 rounded-xl border border-gray-700 hover:border-brand transition">
                     <div class="w-14 h-14 bg-brand/20 text-brand rounded-lg flex items-center justify-center text-2xl mb-6">
                         <i class="fa-solid fa-wheat-awn"></i>
@@ -81,7 +82,6 @@
                     <p class="text-gray-400">Envia as tuas tropas com precisão cirúrgica. Algoritmo inteligente que analisa perdas e otimiza a rentabilidade das tuas farm lists.</p>
                 </div>
 
-                <!-- Feature 2 -->
                 <div class="bg-gray-800 p-8 rounded-xl border border-gray-700 hover:border-brand transition">
                     <div class="w-14 h-14 bg-brand/20 text-brand rounded-lg flex items-center justify-center text-2xl mb-6">
                         <i class="fa-solid fa-hammer"></i>
@@ -90,7 +90,6 @@
                     <p class="text-gray-400">Cria a tua lista de edifícios e vai dormir. O Ceasar Bot usa os recursos assim que estão disponíveis para crescer a tua aldeia sem parar.</p>
                 </div>
 
-                <!-- Feature 3 -->
                 <div class="bg-gray-800 p-8 rounded-xl border border-gray-700 hover:border-brand transition">
                     <div class="w-14 h-14 bg-brand/20 text-brand rounded-lg flex items-center justify-center text-2xl mb-6">
                         <i class="fa-solid fa-shield-halved"></i>
@@ -103,26 +102,26 @@
         </div>
     </section>
 
-    <!-- Como Funciona (Onboarding) -->
+    <!-- Como Funciona -->
     <section id="how-it-works" class="py-20">
         <div class="container mx-auto px-6 max-w-4xl text-center">
             <h2 class="text-3xl font-bold mb-12 text-white">Como Instalar em 60 Segundos</h2>
             <div class="flex flex-col md:flex-row justify-between items-start gap-8 relative">
                 
                 <div class="flex-1">
-                    <div class="w-12 h-12 bg-brand text-white rounded-full flex items-center justify-center font-bold text-xl mx-auto mb-4 z-10 relative">1</div>
+                    <div class="w-12 h-12 bg-brand text-white rounded-full flex items-center justify-center font-bold text-xl mx-auto mb-4">1</div>
                     <h4 class="font-bold text-lg mb-2">Instala a Extensão</h4>
                     <p class="text-gray-400 text-sm">Instala a extensão <a href="https://www.tampermonkey.net/" target="_blank" class="text-brand underline">Tampermonkey</a> no teu browser.</p>
                 </div>
 
                 <div class="flex-1">
-                    <div class="w-12 h-12 bg-brand text-white rounded-full flex items-center justify-center font-bold text-xl mx-auto mb-4 z-10 relative">2</div>
+                    <div class="w-12 h-12 bg-brand text-white rounded-full flex items-center justify-center font-bold text-xl mx-auto mb-4">2</div>
                     <h4 class="font-bold text-lg mb-2">Adiciona o Script</h4>
                     <p class="text-gray-400 text-sm">Clica no botão "Instalar Agora" acima e aceita a injeção no Tampermonkey.</p>
                 </div>
 
                 <div class="flex-1">
-                    <div class="w-12 h-12 bg-brand text-white rounded-full flex items-center justify-center font-bold text-xl mx-auto mb-4 z-10 relative">3</div>
+                    <div class="w-12 h-12 bg-brand text-white rounded-full flex items-center justify-center font-bold text-xl mx-auto mb-4">3</div>
                     <h4 class="font-bold text-lg mb-2">Abre o Jogo</h4>
                     <p class="text-gray-400 text-sm">Entra no Travian. O teu Trial de 24h ativa sozinho. Zero complicações.</p>
                 </div>
@@ -146,7 +145,7 @@
                     <li><i class="fa-solid fa-check text-brand mr-2"></i> Lógica 100% alojada no nosso servidor</li>
                     <li><i class="fa-solid fa-check text-brand mr-2"></i> Segurança Anti-Ban Máxima</li>
                 </ul>
-                <a href="LINK_DO_PAYPAL" class="block w-full bg-brand hover:bg-brand-dark text-white font-bold py-4 rounded-lg transition">
+                <a href="#" class="block w-full bg-brand hover:bg-brand-dark text-white font-bold py-4 rounded-lg transition text-center">
                     Renovar / Comprar Premium
                 </a>
             </div>
@@ -157,6 +156,16 @@
     <footer class="bg-[#0b1120] py-8 border-t border-gray-800 text-center">
         <p class="text-gray-500 text-sm">© 2026 Ceasar Automation Tools. Não somos afiliados à Travian Games GmbH.</p>
     </footer>
+
+    <!-- Lógica de Instalação Segura -->
+    <script>
+        function iniciarInstalacao() {
+            // AQUI: Atualiza com o URL Raw do teu loader.user.js
+            const urlSegura = "https://raw.githubusercontent.com/TEU_USERNAME/ceasar-api/main/loader.user.js";
+            
+            window.location.href = urlSegura;
+        }
+    </script>
 
 </body>
 </html>
