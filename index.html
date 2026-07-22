@@ -1,263 +1,162 @@
 <!DOCTYPE html>
-<html lang="pt" data-theme="dark">
+<html lang="pt">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CEASAR | Master Builder Edition</title>
-  
-  <!-- Fontes Premium (Fontshare) -->
-  <link href="https://api.fontshare.com/v2/css?f[]=cabinet-grotesk@800,500,700&f[]=satoshi@400,500,700&display=swap" rel="stylesheet">
-  
-  <style>
-    /* DESIGN TOKENS & CORES BASE */
-    :root {
-      --color-bg: #11100e;
-      --color-surface: #181715;
-      --color-surface-2: #1f1d1a;
-      --color-border: #33302a;
-      --color-text: #eae8e4;
-      --color-text-muted: #9e9c98;
-      
-      /* Acento Dourado/Romano */
-      --color-primary: #d4a373;
-      --color-primary-hover: #b0855a;
-      
-      --font-display: 'Cabinet Grotesk', sans-serif;
-      --font-body: 'Satoshi', sans-serif;
-      
-      /* Typografia Fluida */
-      --text-sm: clamp(0.875rem, 0.8rem + 0.35vw, 1rem);
-      --text-base: clamp(1rem, 0.95rem + 0.25vw, 1.125rem);
-      --text-lg: clamp(1.125rem, 1rem + 0.75vw, 1.5rem);
-      --text-xl: clamp(1.5rem, 1.2rem + 1.25vw, 2.25rem);
-      --text-2xl: clamp(2rem, 1.5rem + 2.5vw, 3.5rem);
-      --text-hero: clamp(3rem, 1rem + 6vw, 5rem);
-      
-      --radius-md: 0.5rem;
-      --radius-lg: 0.75rem;
-      --radius-xl: 1rem;
-    }
-
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    
-    body {
-      font-family: var(--font-body);
-      font-size: var(--text-base);
-      color: var(--color-text);
-      background-color: var(--color-bg);
-      line-height: 1.6;
-      -webkit-font-smoothing: antialiased;
-    }
-
-    .container { max-width: 1000px; margin: 0 auto; padding: 0 24px; }
-    
-    /* HEADER */
-    header {
-      padding: 32px 0;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      border-bottom: 1px solid var(--color-border);
-    }
-    .logo {
-      font-family: var(--font-display);
-      font-weight: 800;
-      font-size: var(--text-lg);
-      letter-spacing: 0.1em;
-      color: var(--color-primary);
-      text-transform: uppercase;
-    }
-    
-    /* HERO SECTION */
-    .hero {
-      padding: 100px 0 80px;
-      text-align: center;
-    }
-    .hero h1 {
-      font-family: var(--font-display);
-      font-size: var(--text-hero);
-      line-height: 1.1;
-      margin-bottom: 24px;
-      color: #fff;
-    }
-    .hero p {
-      color: var(--color-text-muted);
-      font-size: var(--text-lg);
-      max-width: 600px;
-      margin: 0 auto 40px;
-    }
-    .btn {
-      display: inline-block;
-      background: var(--color-primary);
-      color: #111;
-      font-weight: 700;
-      padding: 16px 32px;
-      border-radius: var(--radius-md);
-      text-decoration: none;
-      transition: background 0.2s;
-      font-size: var(--text-sm);
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-    }
-    .btn:hover { background: var(--color-primary-hover); }
-    
-    /* FEATURES GRID */
-    .features {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 24px;
-      padding: 64px 0;
-    }
-    .feature-card {
-      background: var(--color-surface);
-      border: 1px solid var(--color-border);
-      padding: 32px;
-      border-radius: var(--radius-lg);
-    }
-    .feature-card h3 {
-      font-family: var(--font-display);
-      font-size: var(--text-lg);
-      margin-bottom: 12px;
-      color: var(--color-primary);
-    }
-    .feature-card p {
-      color: var(--color-text-muted);
-      font-size: var(--text-sm);
-    }
-
-    /* STEPS SECTION */
-    .steps-section {
-      padding: 80px 0;
-      background: var(--color-surface-2);
-      margin-top: 64px;
-    }
-    .steps-section h2 {
-      font-family: var(--font-display);
-      text-align: center;
-      font-size: var(--text-2xl);
-      margin-bottom: 64px;
-    }
-    .step-box {
-      background: var(--color-surface);
-      border: 1px solid var(--color-border);
-      border-radius: var(--radius-lg);
-      padding: 32px;
-      margin-bottom: 24px;
-      display: flex;
-      align-items: flex-start;
-      gap: 24px;
-    }
-    .step-number {
-      background: var(--color-primary);
-      color: #111;
-      width: 48px;
-      height: 48px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-family: var(--font-display);
-      font-weight: 800;
-      font-size: var(--text-lg);
-      border-radius: var(--radius-md);
-      flex-shrink: 0;
-    }
-    .step-content h3 {
-      font-size: var(--text-lg);
-      margin-bottom: 8px;
-    }
-    .step-content p {
-      color: var(--color-text-muted);
-      margin-bottom: 16px;
-    }
-    .btn-outline {
-      display: inline-block;
-      border: 1px solid var(--color-border);
-      color: var(--color-text);
-      padding: 8px 16px;
-      border-radius: var(--radius-md);
-      text-decoration: none;
-      font-size: var(--text-sm);
-      transition: border-color 0.2s;
-    }
-    .btn-outline:hover { border-color: var(--color-primary); }
-
-    /* FOOTER */
-    footer {
-      text-align: center;
-      padding: 48px 0;
-      color: var(--color-text-muted);
-      font-size: var(--text-sm);
-      border-top: 1px solid var(--color-border);
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ceasar Bot - Automação Avançada para Travian</title>
+    <!-- Tailwind CSS (Framework de Design Moderno) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            light: '#fde68a',
+                            DEFAULT: '#f59e0b', // Laranja "Ouro Romano"
+                            dark: '#d97706',
+                        },
+                        dark: '#111827' // Fundo Escuro Moderno
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Fontes -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap');
+        body { font-family: 'Inter', sans-serif; background-color: #0f172a; color: #f3f4f6; }
+        .hero-gradient { background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); }
+    </style>
 </head>
-<body>
+<body class="antialiased">
 
-  <header class="container">
-    <div class="logo">CEASAR</div>
-    <a href="#install" class="btn">Obter Acesso</a>
-  </header>
+    <!-- Navegação -->
+    <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+        <div class="text-2xl font-bold text-white flex items-center gap-2">
+            <i class="fa-solid fa-crown text-brand"></i> Ceasar Bot
+        </div>
+        <div class="hidden md:flex space-x-6 text-sm font-semibold">
+            <a href="#features" class="hover:text-brand transition">Recursos</a>
+            <a href="#how-it-works" class="hover:text-brand transition">Como Funciona</a>
+            <a href="#pricing" class="hover:text-brand transition">Preços</a>
+        </div>
+    </nav>
 
-  <main>
-    <section class="hero container">
-      <h1>Master Builder Edition</h1>
-      <p>A ferramenta de automação definitiva. Auto-Farm, Gestão de Mercado, Alertas de Ataque e um Construtor Inteligente que trabalha enquanto dormes.</p>
-      <a href="#install" class="btn">Instalar CEASAR</a>
+    <!-- Hero Section (Principal) -->
+    <header class="hero-gradient border-b border-gray-800">
+        <div class="container mx-auto px-6 py-24 text-center md:py-32">
+            <h1 class="text-4xl md:text-6xl font-extrabold text-white mb-6 leading-tight">
+                Domina o Império em <span class="text-brand">Piloto Automático.</span>
+            </h1>
+            <p class="text-lg md:text-xl text-gray-400 mb-10 max-w-2xl mx-auto">
+                O bot mais seguro, rápido e inteligente para Travian. Farm, construção e evasão a correr 24/7 diretamente no teu browser. Sem detecções.
+            </p>
+            <div class="flex flex-col sm:flex-row justify-center gap-4">
+                <!-- Botão de Instalação (Muda o Href para o link do teu script Raw do Tampermonkey) -->
+                <a href="LINK_PARA_O_TEU_SCRIPT.user.js" class="bg-brand hover:bg-brand-dark text-white font-bold py-4 px-8 rounded-lg text-lg transition shadow-lg shadow-brand/30 flex items-center justify-center gap-3">
+                    <i class="fa-solid fa-download"></i> Instalar Agora Grátis
+                </a>
+                <a href="#how-it-works" class="bg-gray-800 hover:bg-gray-700 text-white font-bold py-4 px-8 rounded-lg text-lg transition border border-gray-700">
+                    Saber Mais
+                </a>
+            </div>
+            <p class="mt-4 text-sm text-gray-500"><i class="fa-solid fa-check text-green-500"></i> Inclui 24h de Teste Premium Automático</p>
+        </div>
+    </header>
+
+    <!-- Features Section -->
+    <section id="features" class="py-20 bg-gray-900">
+        <div class="container mx-auto px-6">
+            <h2 class="text-3xl font-bold text-center mb-16 text-white">Criado para Vencer</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
+                
+                <!-- Feature 1 -->
+                <div class="bg-gray-800 p-8 rounded-xl border border-gray-700 hover:border-brand transition">
+                    <div class="w-14 h-14 bg-brand/20 text-brand rounded-lg flex items-center justify-center text-2xl mb-6">
+                        <i class="fa-solid fa-wheat-awn"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-3">Farm Automático</h3>
+                    <p class="text-gray-400">Envia as tuas tropas com precisão cirúrgica. Algoritmo inteligente que analisa perdas e otimiza a rentabilidade das tuas farm lists.</p>
+                </div>
+
+                <!-- Feature 2 -->
+                <div class="bg-gray-800 p-8 rounded-xl border border-gray-700 hover:border-brand transition">
+                    <div class="w-14 h-14 bg-brand/20 text-brand rounded-lg flex items-center justify-center text-2xl mb-6">
+                        <i class="fa-solid fa-hammer"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-3">Construtor Contínuo</h3>
+                    <p class="text-gray-400">Cria a tua lista de edifícios e vai dormir. O Ceasar Bot usa os recursos assim que estão disponíveis para crescer a tua aldeia sem parar.</p>
+                </div>
+
+                <!-- Feature 3 -->
+                <div class="bg-gray-800 p-8 rounded-xl border border-gray-700 hover:border-brand transition">
+                    <div class="w-14 h-14 bg-brand/20 text-brand rounded-lg flex items-center justify-center text-2xl mb-6">
+                        <i class="fa-solid fa-shield-halved"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-3">Evasão & Segurança</h3>
+                    <p class="text-gray-400">Salva as tuas tropas de ataques enquanto dormes. O código corre 100% invisível ao anti-cheat do Travian.</p>
+                </div>
+
+            </div>
+        </div>
     </section>
 
-    <section class="features container">
-      <div class="feature-card">
-        <h3>Auto Farm Premium</h3>
-        <p>Envia as tuas farmlists automaticamente. Simula comportamentos humanos para evitar deteção, com pausas inteligentes.</p>
-      </div>
-      <div class="feature-card">
-        <h3>Smart Builder</h3>
-        <p>Gere as tuas vilas. Define a fila de construção e o CEASAR evolui os campos e edifícios ao milissegundo em que os recursos ficam disponíveis.</p>
-      </div>
-      <div class="feature-card">
-        <h3>Alarme de Ataques</h3>
-        <p>Deteta ataques a chegar e envia alertas imediatos via Discord com detalhes da vila atacada. Nunca mais percas tropas.</p>
-      </div>
+    <!-- Como Funciona (Onboarding) -->
+    <section id="how-it-works" class="py-20">
+        <div class="container mx-auto px-6 max-w-4xl text-center">
+            <h2 class="text-3xl font-bold mb-12 text-white">Como Instalar em 60 Segundos</h2>
+            <div class="flex flex-col md:flex-row justify-between items-start gap-8 relative">
+                
+                <div class="flex-1">
+                    <div class="w-12 h-12 bg-brand text-white rounded-full flex items-center justify-center font-bold text-xl mx-auto mb-4 z-10 relative">1</div>
+                    <h4 class="font-bold text-lg mb-2">Instala a Extensão</h4>
+                    <p class="text-gray-400 text-sm">Instala a extensão <a href="https://www.tampermonkey.net/" target="_blank" class="text-brand underline">Tampermonkey</a> no teu browser.</p>
+                </div>
+
+                <div class="flex-1">
+                    <div class="w-12 h-12 bg-brand text-white rounded-full flex items-center justify-center font-bold text-xl mx-auto mb-4 z-10 relative">2</div>
+                    <h4 class="font-bold text-lg mb-2">Adiciona o Script</h4>
+                    <p class="text-gray-400 text-sm">Clica no botão "Instalar Agora" acima e aceita a injeção no Tampermonkey.</p>
+                </div>
+
+                <div class="flex-1">
+                    <div class="w-12 h-12 bg-brand text-white rounded-full flex items-center justify-center font-bold text-xl mx-auto mb-4 z-10 relative">3</div>
+                    <h4 class="font-bold text-lg mb-2">Abre o Jogo</h4>
+                    <p class="text-gray-400 text-sm">Entra no Travian. O teu Trial de 24h ativa sozinho. Zero complicações.</p>
+                </div>
+            </div>
+        </div>
     </section>
 
-    <section id="install" class="steps-section">
-      <div class="container">
-        <h2>3 Etapas Simples</h2>
-        
-        <div class="step-box">
-          <div class="step-number">01</div>
-          <div class="step-content">
-            <h3>Instalar o Tampermonkey</h3>
-            <p>O Tampermonkey é uma extensão gratuita para o browser necessária para carregar o CEASAR.</p>
-            <a href="https://www.tampermonkey.net/" target="_blank" class="btn-outline">Instalar Tampermonkey</a>
-          </div>
+    <!-- Preços -->
+    <section id="pricing" class="py-20 bg-gray-900">
+        <div class="container mx-auto px-6 max-w-3xl text-center">
+            <h2 class="text-3xl font-bold mb-6 text-white">Planos Simples e Claros</h2>
+            <p class="text-gray-400 mb-12">Paga apenas quando vires os resultados. Sem subscrições automáticas surpresa.</p>
+            
+            <div class="bg-gray-800 rounded-2xl border border-gray-700 p-8 shadow-2xl relative overflow-hidden">
+                <div class="absolute top-0 right-0 bg-brand text-white text-xs font-bold px-3 py-1 rounded-bl-lg uppercase tracking-wide">Mais Popular</div>
+                <h3 class="text-2xl font-bold text-white mb-2">Licença Premium Mensal</h3>
+                <div class="text-5xl font-extrabold text-white mb-6">€9.99<span class="text-lg text-gray-500 font-normal">/mês</span></div>
+                <ul class="text-left text-gray-300 space-y-4 mb-8 max-w-xs mx-auto">
+                    <li><i class="fa-solid fa-check text-brand mr-2"></i> Atualizações Diárias Over-The-Air</li>
+                    <li><i class="fa-solid fa-check text-brand mr-2"></i> Suporte Prioritário</li>
+                    <li><i class="fa-solid fa-check text-brand mr-2"></i> Lógica 100% alojada no nosso servidor</li>
+                    <li><i class="fa-solid fa-check text-brand mr-2"></i> Segurança Anti-Ban Máxima</li>
+                </ul>
+                <a href="LINK_DO_PAYPAL" class="block w-full bg-brand hover:bg-brand-dark text-white font-bold py-4 rounded-lg transition">
+                    Renovar / Comprar Premium
+                </a>
+            </div>
         </div>
-
-        <div class="step-box">
-          <div class="step-number">02</div>
-          <div class="step-content">
-            <h3>Instalar o Loader CEASAR</h3>
-            <p>Clica abaixo. O Tampermonkey vai abrir e perguntar se queres instalar o script. Clica em "Install".</p>
-            <!-- Substitui este link pelo link direto do teu loader no GitHub ou no teu site -->
-            <a href="https://github.com/mosqueirojose-boop/ceasar-api/raw/refs/heads/main/ceasar-api/loader.user.js" class="btn-outline" style="border-color: var(--color-primary); color: var(--color-primary);">Instalar Loader</a>
-          </div>
-        </div>
-
-        <div class="step-box">
-          <div class="step-number">03</div>
-          <div class="step-content">
-            <h3>Adquirir Licença & Jogar</h3>
-            <p>Abre o jogo, passa pelo Lobby para capturarmos a tua conta, insere a tua licença e o painel premium aparece imediatamente.</p>
-            <a href="#pagamento" class="btn">Comprar Licença (Brevemente)</a>
-          </div>
-        </div>
-      </div>
     </section>
-  </main>
 
-  <footer class="container">
-    <p>&copy; 2026 CEASAR Bot. Todos os direitos reservados. Uso exclusivo e privado.</p>
-  </footer>
+    <!-- Footer -->
+    <footer class="bg-[#0b1120] py-8 border-t border-gray-800 text-center">
+        <p class="text-gray-500 text-sm">© 2026 Ceasar Automation Tools. Não somos afiliados à Travian Games GmbH.</p>
+    </footer>
 
 </body>
 </html>
