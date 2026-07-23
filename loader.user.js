@@ -1,6 +1,7 @@
 // ==UserScript==
 // @name         CEASAR
 // @namespace    http://tampermonkey.net/
+// @author       Goat Seasoning
 // @version      3.1
 // @description  UI In-Game (errors only) & Lobby, 8H Cache, Manual Refresh
 // @match        *://*.travian.com/*
