@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CEASAR - Subscribe to Premium</title>
+    <title>CEASAR - Checkout</title>
     
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -96,10 +96,10 @@
                     layout: 'vertical',
                     label: 'subscribe'
                 },
-                createSubscription: function(data, actions) {
+                 createSubscription: function(data, actions) {
                     return actions.subscription.create({
-                        /* AQUI: Coloca o Plan ID que geraste no teu PayPal (ex: P-123456789) */
-                        'plan_id': 'P-O_TEU_PLAN_ID_AQUI', 
+                        /* AQUI: O teu Plan ID real */
+                        'plan_id': 'P-8DU23656SV888420ANJRAGHQ', 
                         
                         /* AQUI: Passamos o LobbyId (email) para o PayPal enviar ao teu servidor via Webhook */
                         'custom_id': lobbyId 
