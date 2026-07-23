@@ -3,7 +3,7 @@
 // @namespace    http://tampermonkey.net/
 // @author       Goat Seasoning
 // @version      3.3
-// @description  UI In-Game (errors only) & Lobby, 8H Cache, Manual Refresh + Tracking Background Sync
+// @description  UI In-Game & Lobby, Cache, Manual Refresh + Sync
 // @match        *://*.travian.com/*
 // @updateURL    https://ceasarbot.com/loader.user.js
 // @downloadURL  https://ceasarbot.com/loader.user.js
@@ -18,20 +18,17 @@
 
     const API_BASE = 'https://ceasar-api.onrender.com/api';
 
-    // CACHE ULTRA-LONGA:
-    const CACHE_ACTIVE_MS = 8 * 60 * 60 * 1000; // 8 Horas se estiver Ativo (Poupança Extrema)
-    const CACHE_INACTIVE_MS = 15 * 1000;        // 15 Segundos se estiver Expirado
+    const CACHE_ACTIVE_MS = 8 * 60 * 60 * 1000;
+    const CACHE_INACTIVE_MS = 15 * 1000;
 
     const isLobby = window.location.hostname.includes('lobby');
 
-    // --- 0. FUNÇÃO PARA FORMATAR A DATA ---
     function formatarData(isoString) {
         if (!isoString) return 'Unknown';
         const date = new Date(isoString);
         return date.toLocaleDateString('en-GB') + ' ' + date.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' });
     }
 
-    // --- 1. UI DO LOADER (DESIGN PREMIUM ROMANO) ---
     function desenharPainelLoader(lobbyId, estado, mensagemExtra = "") {
 
         if (!isLobby && (estado === 'active' || estado === 'loading')) {
@@ -44,7 +41,6 @@
         if (!box) {
             box = document.createElement('div');
             box.id = 'ceasar-loader-panel';
-            // CSS Premium blindado contra as páginas do Travian
             box.style.cssText = `
                 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
                 all: initial !important;
@@ -167,14 +163,13 @@
             });
             refreshBtn.addEventListener('click', () => {
                 refreshBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin" style="margin-right: 4px;"></i> Verifying...';
-                GM_setValue('ceasar_last_check_time', 0); // Força invalidação da cache
+                GM_setValue('ceasar_last_check_time', 0); 
                 GM_setValue('ceasar_force_server_sync', true);
                 setTimeout(inicializar, 200);
             });
         }
     }
 
-    // --- 2. GESTÃO DO LOBBY ID E DADOS DO JOGO ---
     function getLobbyUsername() {
         if (isLobby) {
             const accountMenuSpan = document.querySelector('a.openCloseAccountMenu span');
@@ -193,11 +188,9 @@
         let avatar = null;
         let server = window.location.hostname;
 
-        // Tentativa 1: Classe playerName (Travian Legends)
         const avatarElement = document.querySelector('.playerName');
         if (avatarElement) avatar = avatarElement.innerText.trim();
 
-        // Tentativa 2: Perfil alternativo
         if (!avatar) {
             const sideInfo = document.querySelector('#sidebarBoxActiveVillage .playerName');
             if (sideInfo) avatar = sideInfo.innerText.trim();
@@ -206,7 +199,6 @@
         return { avatar, server };
     }
 
-    // --- 3. EXECUTAR O BOT IMEDIATAMENTE ---
     function executarBotDaMemoria(lobbyId) {
         const codigoGuardado = GM_getValue('ceasar_bot_code');
         if (codigoGuardado) {
@@ -221,7 +213,6 @@
         }
     }
 
-    // --- 4. ATUALIZAR O CÓDIGO EM BACKGROUND ---
     function pedirCodigoAoServidor(lobbyId, executarLogo = false) {
         GM_xmlhttpRequest({
             method: "POST",
@@ -240,7 +231,6 @@
         });
     }
 
-        // --- 5. LÓGICA CENTRAL ---
     async function inicializar() {
         const lobbyId = getLobbyUsername();
 
@@ -258,24 +248,18 @@
 
         desenharPainelLoader(lobbyId, 'loading');
 
-        // CACHE AINDA VÁLIDA E NÃO FOI PEDIDO UM REFRESH FORÇADO
         if (tempoPassado < limiteCache && !forceSync) {
             if (licencaEstaAtivaNaCache) {
                 desenharPainelLoader(lobbyId, 'active');
 
                 if (!isLobby) {
                     executarBotDaMemoria(lobbyId);
-
-                    // ==========================================
-                    // PING SILENCIOSO (COM LIMITADOR DE RECURSOS)
-                    // ==========================================
                     const dadosJogo = getDadosServidor();
 
                     if (dadosJogo.avatar && dadosJogo.server) {
                         const chaveCacheServer = `ceasar_last_sync_${dadosJogo.server}_${dadosJogo.avatar}`;
                         const ultimoSyncDesteServer = GM_getValue(chaveCacheServer, 0);
 
-                        // Só envia para a BD se passaram 6 horas (21600000ms) desde o último ping para ESTE servidor/avatar
                         if (Date.now() - ultimoSyncDesteServer > 6 * 60 * 60 * 1000) {
                             fetch(API_BASE + '/auth', {
                                 method: 'POST',
@@ -286,7 +270,6 @@
                                     server: dadosJogo.server
                                 })
                             }).then(() => {
-                                // Se o fetch deu sucesso, guardamos que já avisámos o servidor hoje
                                 GM_setValue(chaveCacheServer, Date.now());
                             }).catch(e => console.log('Background sync error', e));
                         }
@@ -302,7 +285,6 @@
             return;
         }
 
-        // VALIDAR COM O SERVIDOR (Cache expirada ou Force Sync)
         try {
             const dadosJogo = getDadosServidor();
 
@@ -321,7 +303,6 @@
             GM_setValue('ceasar_last_check_time', Date.now());
             GM_setValue('ceasar_force_server_sync', false);
 
-            // Grava também que acabámos de enviar estes dados do servidor
             if (dadosJogo.avatar && dadosJogo.server) {
                  const chaveCacheServer = `ceasar_last_sync_${dadosJogo.server}_${dadosJogo.avatar}`;
                  GM_setValue(chaveCacheServer, Date.now());
@@ -359,7 +340,6 @@
         }
     }
 
-    // Inicialização da Script
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', inicializar);
     } else {
