@@ -5,12 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CEASAR - Checkout</title>
     
-    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@500;700;900&display=swap" rel="stylesheet">
 
-    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -33,15 +31,11 @@
         }
     </script>
     
-    <!-- Script do PayPal -->
-    <!-- SUBSTITUI o Client-ID abaixo pelo teu verdadeiro -->
     <script src="https://www.paypal.com/sdk/js?client-id=AecodqpTkHgk-Zmqm86S1gajXSxnbtJ5TKmn7pphaocvdLOHa55KPritoyhTWX29UKqS-o66pFTECLFq&currency=EUR&vault=true&intent=subscription"></script>
 </head>
 
-<!-- O Fundo Radial EXATAMENTE igual ao Hero da Index -->
 <body class="font-sans text-gray-200 antialiased flex flex-col items-center justify-center min-h-screen p-4 relative overflow-hidden" style="background: radial-gradient(circle at center, #2a0b12 0%, #0f172a 95%);">
 
-    <!-- O Título Gigante "CEASAR" -->
     <div class="text-center z-10 mb-10 mt-8">
         <h1 class="font-serif text-6xl md:text-8xl font-black text-white mb-2 uppercase tracking-tight">
             CEASAR
@@ -51,10 +45,8 @@
         </p>
     </div>
 
-    <!-- Cartão de Checkout (Usando o bg-roman-card para manter coerência) -->
     <div class="bg-roman-card p-8 md:p-10 rounded-2xl border border-white/10 shadow-[0_0_40px_rgba(0,0,0,0.5)] max-w-md w-full text-center relative z-10">
         
-        <!-- Preço em Destaque -->
         <div class="flex items-end justify-center gap-1 mb-6 mt-2">
             <span class="text-5xl md:text-2xl font-extrabold text-roman-gold">9.89€</span>
             <span class="text-gray-400 font-medium mb-1 md:mb-1">/ month</span>
@@ -62,12 +54,10 @@
         
         <p class="text-sm text-gray-400 mb-3">Licensing account:</p>
         
-        <!-- Caixa com o email/lobby id -->
         <div id="lobby-id-display" class="bg-[#0a0f1d] p-3 md:p-4 rounded-lg font-mono text-green-400 mb-8 border border-white/5 text-lg shadow-inner">
             Loading...
         </div>
 
-        <!-- Botões do PayPal -->
         <div id="paypal-button-container" class="min-h-[150px]"></div>
         
         <p class="text-xs text-gray-500 mt-6 leading-relaxed">
@@ -76,19 +66,16 @@
     </div>
 
     <script>
-        // 1. Extrair o 'user' do URL (Ex: checkout.html?user=leewinga#MDL)
         const urlParams = new URLSearchParams(window.location.search);
         const lobbyId = urlParams.get('user');
 
         if (!lobbyId) {
             document.getElementById('lobby-id-display').innerText = "ERROR: Account missing. Go back to Travian Lobby and click the 'Renew' button again.";
             document.getElementById('lobby-id-display').className = "bg-roman-red/20 p-4 rounded-lg font-mono text-white mb-8 border border-roman-red text-lg shadow-inner";
-            // Esconder botões do PayPal se não houver conta
             document.getElementById('paypal-button-container').style.display = "none";
         } else {
             document.getElementById('lobby-id-display').innerText = lobbyId;
 
-            // 2. Renderizar Subscrição do PayPal 
             paypal.Buttons({
                 style: {
                     shape: 'rect',
@@ -98,14 +85,11 @@
                 },
                  createSubscription: function(data, actions) {
                     return actions.subscription.create({
-                        /* AQUI: O teu Plan ID real */
-                        'plan_id': 'P-8DU23656SV888420ANJRAGHQ', 
-                        /* AQUI: Passamos o LobbyId para o Webhook */
+                        'plan_id': 'P-8DU23656SV888420ANJRAGHQ',
                         'custom_id': lobbyId 
                     });
                 },
                 onApprove: function(data, actions) {
-                    // Substituímos o alert nativo (que bloqueia pop-ups) por uma alteração no próprio HTML
                     const container = document.getElementById('paypal-button-container');
                     container.innerHTML = `
                         <div class="bg-green-500/20 text-green-400 p-4 rounded-lg border border-green-500/50 mb-4">
