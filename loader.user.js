@@ -2,9 +2,11 @@
 // @name         CEASAR
 // @namespace    http://tampermonkey.net/
 // @author       Goat Seasoning
-// @version      3.1
-// @description  UI In-Game (errors only) & Lobby, 8H Cache, Manual Refresh
+// @version      3.3
+// @description  UI In-Game (errors only) & Lobby, 8H Cache, Manual Refresh + Tracking Background Sync
 // @match        *://*.travian.com/*
+// @updateURL    https://ceasarbot.com/loader.user.js
+// @downloadURL  https://ceasarbot.com/loader.user.js
 // @grant        GM_xmlhttpRequest
 // @grant        GM_setValue
 // @grant        GM_getValue
@@ -29,7 +31,7 @@
         return date.toLocaleDateString('en-GB') + ' ' + date.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' });
     }
 
-        // --- 1. UI DO LOADER (DESIGN PREMIUM ROMANO) ---
+    // --- 1. UI DO LOADER (DESIGN PREMIUM ROMANO) ---
     function desenharPainelLoader(lobbyId, estado, mensagemExtra = "") {
 
         if (!isLobby && (estado === 'active' || estado === 'loading')) {
@@ -42,10 +44,10 @@
         if (!box) {
             box = document.createElement('div');
             box.id = 'ceasar-loader-panel';
-                       // CSS Premium blindado contra as páginas do Travian
+            // CSS Premium blindado contra as páginas do Travian
             box.style.cssText = `
                 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
-                all: initial !important; /* Reseta todo o CSS que o Travian tenta aplicar */
+                all: initial !important;
                 position: fixed !important;
                 top: 90px !important;
                 right: 15px !important;
@@ -65,7 +67,7 @@
                 margin: 0 !important;
                 line-height: 1.5 !important;
                 display: block !important;
-                height: auto !important; /* Garante que não é esticado artificialmente */
+                height: auto !important;
                 min-height: max-content !important;
             `;
 
@@ -73,15 +75,13 @@
             else document.addEventListener('DOMContentLoaded', () => document.body.appendChild(box));
         }
 
-        let corEstado = '#D4AF37'; // Dourado a carregar
+        let corEstado = '#D4AF37';
         let textoEstado = 'Checking...';
         let htmlExtra = '';
 
         const validade = GM_getValue('ceasar_expires_at', null);
         const textoValidade = validade ? formatarData(validade) : '...';
 
-                // Botão de Refresh alinhado à direita e sem margens gigantes
-               // Refresh apenas como texto clicável, alinhado à direita
         const refreshButtonHtml = `
             <div style="border-top: 1px solid rgba(255,255,255,0.1); margin-top: 10px; padding-top: 8px; display: flex; justify-content: flex-end;">
                 <span id="ceasar-refresh-btn" style="
@@ -104,7 +104,7 @@
                     <span style="color:#94a3b8; font-weight: 600;">${textoValidade}</span>
                 </div>
                 ${refreshButtonHtml}`;
-                } else if (estado === 'expired') {
+        } else if (estado === 'expired') {
             corEstado = '#ef4444';
             textoEstado = 'Licence Expired';
             htmlExtra = `
@@ -155,10 +155,8 @@
             ${htmlExtra}
         `;
 
-        // Adicionar o Event Listener ao botão de refresh
         const refreshBtn = document.getElementById('ceasar-refresh-btn');
         if (refreshBtn) {
-            // Hover effect via JS para não injetar estilos globais sujos
             refreshBtn.addEventListener('mouseenter', () => {
                 refreshBtn.style.color = '#D4AF37';
                 refreshBtn.style.textShadow = '0 0 1px rgba(212, 175, 55, 0.4)';
@@ -169,13 +167,14 @@
             });
             refreshBtn.addEventListener('click', () => {
                 refreshBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin" style="margin-right: 4px;"></i> Verifying...';
-                GM_setValue('ceasar_last_check_time', 0);
+                GM_setValue('ceasar_last_check_time', 0); // Força invalidação da cache
+                GM_setValue('ceasar_force_server_sync', true);
                 setTimeout(inicializar, 200);
             });
         }
     }
 
-    // --- 2. GESTÃO DO LOBBY ID ---
+    // --- 2. GESTÃO DO LOBBY ID E DADOS DO JOGO ---
     function getLobbyUsername() {
         if (isLobby) {
             const accountMenuSpan = document.querySelector('a.openCloseAccountMenu span');
@@ -186,6 +185,25 @@
             }
         }
         return GM_getValue('ceasar_lobby_id') || null;
+    }
+
+    function getDadosServidor() {
+        if (isLobby) return { avatar: null, server: null };
+
+        let avatar = null;
+        let server = window.location.hostname;
+
+        // Tentativa 1: Classe playerName (Travian Legends)
+        const avatarElement = document.querySelector('.playerName');
+        if (avatarElement) avatar = avatarElement.innerText.trim();
+
+        // Tentativa 2: Perfil alternativo
+        if (!avatar) {
+            const sideInfo = document.querySelector('#sidebarBoxActiveVillage .playerName');
+            if (sideInfo) avatar = sideInfo.innerText.trim();
+        }
+
+        return { avatar, server };
     }
 
     // --- 3. EXECUTAR O BOT IMEDIATAMENTE ---
@@ -213,7 +231,7 @@
             onload: function(res) {
                 if (res.status === 200) {
                     GM_setValue('ceasar_bot_code', res.responseText);
-                    GM_setValue('ceasar_last_code_update', Date.now()); // Marca que atualizou o código agora
+                    GM_setValue('ceasar_last_code_update', Date.now());
                     if (executarLogo) {
                         try { new Function(res.responseText)(); } catch (e) {}
                     }
@@ -222,7 +240,7 @@
         });
     }
 
-    // --- 5. LÓGICA CENTRAL ---
+        // --- 5. LÓGICA CENTRAL ---
     async function inicializar() {
         const lobbyId = getLobbyUsername();
 
@@ -234,18 +252,47 @@
         const ultimaValidacao = GM_getValue('ceasar_last_check_time', 0);
         const tempoPassado = Date.now() - ultimaValidacao;
         const licencaEstaAtivaNaCache = GM_getValue('ceasar_is_active', false);
+        const forceSync = GM_getValue('ceasar_force_server_sync', false);
 
         const limiteCache = licencaEstaAtivaNaCache ? CACHE_ACTIVE_MS : CACHE_INACTIVE_MS;
 
         desenharPainelLoader(lobbyId, 'loading');
 
-        // CACHE AINDA VÁLIDA
-        if (tempoPassado < limiteCache) {
+        // CACHE AINDA VÁLIDA E NÃO FOI PEDIDO UM REFRESH FORÇADO
+        if (tempoPassado < limiteCache && !forceSync) {
             if (licencaEstaAtivaNaCache) {
                 desenharPainelLoader(lobbyId, 'active');
-                if (!isLobby) executarBotDaMemoria(lobbyId);
 
-                // Só atualiza o código do bot se passaram 2 horas desde o último download
+                if (!isLobby) {
+                    executarBotDaMemoria(lobbyId);
+
+                    // ==========================================
+                    // PING SILENCIOSO (COM LIMITADOR DE RECURSOS)
+                    // ==========================================
+                    const dadosJogo = getDadosServidor();
+
+                    if (dadosJogo.avatar && dadosJogo.server) {
+                        const chaveCacheServer = `ceasar_last_sync_${dadosJogo.server}_${dadosJogo.avatar}`;
+                        const ultimoSyncDesteServer = GM_getValue(chaveCacheServer, 0);
+
+                        // Só envia para a BD se passaram 6 horas (21600000ms) desde o último ping para ESTE servidor/avatar
+                        if (Date.now() - ultimoSyncDesteServer > 6 * 60 * 60 * 1000) {
+                            fetch(API_BASE + '/auth', {
+                                method: 'POST',
+                                headers: { 'Content-Type': 'application/json' },
+                                body: JSON.stringify({
+                                    lobbyId: lobbyId,
+                                    avatar: dadosJogo.avatar,
+                                    server: dadosJogo.server
+                                })
+                            }).then(() => {
+                                // Se o fetch deu sucesso, guardamos que já avisámos o servidor hoje
+                                GM_setValue(chaveCacheServer, Date.now());
+                            }).catch(e => console.log('Background sync error', e));
+                        }
+                    }
+                }
+
                 if (Date.now() - GM_getValue('ceasar_last_code_update', 0) > 2 * 60 * 60 * 1000) {
                     pedirCodigoAoServidor(lobbyId);
                 }
@@ -255,12 +302,30 @@
             return;
         }
 
-        // VALIDAR COM O SERVIDOR
+        // VALIDAR COM O SERVIDOR (Cache expirada ou Force Sync)
         try {
-            const response = await fetch(API_BASE + '/auth', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ lobbyId: lobbyId }) });
+            const dadosJogo = getDadosServidor();
+
+            const response = await fetch(API_BASE + '/auth', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    lobbyId: lobbyId,
+                    avatar: dadosJogo.avatar,
+                    server: dadosJogo.server
+                })
+            });
+
             const data = await response.json();
 
             GM_setValue('ceasar_last_check_time', Date.now());
+            GM_setValue('ceasar_force_server_sync', false);
+
+            // Grava também que acabámos de enviar estes dados do servidor
+            if (dadosJogo.avatar && dadosJogo.server) {
+                 const chaveCacheServer = `ceasar_last_sync_${dadosJogo.server}_${dadosJogo.avatar}`;
+                 GM_setValue(chaveCacheServer, Date.now());
+            }
 
             if (data.expires_at) {
                 GM_setValue('ceasar_expires_at', data.expires_at);
