@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html lang="pt" class="scroll-smooth">
+<html lang="en" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CEASAR - Conquer The World</title>
+    <title>CEASAR - Reclaim Your Time</title>
     
-    <!-- Google Fonts: Playfair Display (Clássica/Romana) e Inter (Moderna/Legível) -->
+    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@500;700;900&display=swap" rel="stylesheet">
@@ -13,7 +13,7 @@
     <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-    <!-- Tailwind CSS (Injetado via CDN para manter tudo num ficheiro) -->
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -21,12 +21,12 @@
                 extend: {
                     colors: {
                         roman: {
-                            gold: '#D4AF37',       // Dourado Clássico
-                            goldLight: '#F3E5AB',  // Dourado Claro
-                            red: '#721422',        // Vermelho Romano / Bordeaux
-                            redDark: '#4A0D16',    // Vermelho Muito Escuro
-                            dark: '#0f172a',       // Cinza muito escuro (Fundo principal)
-                            card: '#1e293b'        // Cinza azulado (Fundo dos cartões)
+                            gold: '#D4AF37',
+                            goldLight: '#F3E5AB',
+                            red: '#721422',
+                            redDark: '#4A0D16',
+                            dark: '#0f172a',
+                            card: '#1e293b'
                         }
                     },
                     fontFamily: {
@@ -39,14 +39,11 @@
     </script>
 
     <style>
-        /* Padrão subtil de colunas/geometria no fundo */
         .bg-roman-pattern {
-    background-color: #0f172a;
-    background-image: url('https://www.transparenttextures.com/patterns/stardust.png');
-    
-}
+            background-color: #0f172a;
+            background-image: url('https://www.transparenttextures.com/patterns/stardust.png');
+        }
         
-        /* Brilho dourado para botões e destaques */
         .glow-gold {
             box-shadow: 0 0 20px rgba(212, 175, 55, 0.3);
             transition: all 0.3s ease;
@@ -62,23 +59,24 @@
     <!-- Navbar Minimalista -->
     <nav class="fixed w-full z-50 bg-roman-dark/80 backdrop-blur-md border-b border-white/5">
         <div class="container mx-auto px-6 py-4 flex justify-between items-center">
-            <div class="font-serif font-bold text-2xl text-roman-gold tracking-widest">
-                <i class="fa-solid fa-crown text-lg mr-2"></i>CEASAR
+            
+            <div class="font-serif font-bold text-2xl tracking-widest flex items-center">
+                <span class="text-roman-gold">CEASAR</span>
+                <span class="text-white ml-2">BOT</span>
             </div>
-            <a href="#instalar" class="text-sm font-semibold text-white bg-roman-red hover:bg-roman-redDark px-5 py-2 rounded transition border border-roman-red/50">
-                [Discord]
+            
+            <a href="https://discord.gg/TEU_LINK_AQUI" target="_blank" rel="noopener noreferrer" class="text-[#5865F2] hover:text-white transition duration-300 transform hover:scale-110 flex items-center justify-center p-2">
+                <i class="fa-brands fa-discord text-2xl"></i>
             </a>
         </div>
     </nav>
 
-    <!-- SECÇÃO 1: HERO (INÍCIO) -->
-    <section id="hero" class="relative min-h-screen flex items-center justify-center overflow-hidden pt-20" style="background: radial-gradient(circle at center, #2a0b12 0%, #0f172a 60%);">
-        <!-- Efeito de luz de fundo -->
-        
+    <!-- SECÇÃO 1: HERO -->
+    <section id="hero" class="relative min-h-screen flex items-center justify-center overflow-hidden pt-20" style="background: radial-gradient(circle at center, #2a0b12 0%, #0f172a 95%);">
         
         <div class="container mx-auto px-6 relative z-10 text-center">
             <div class="inline-block border border-roman-gold/30 bg-roman-gold/10 text-roman-gold px-4 py-1.5 rounded-full text-sm font-medium mb-6 tracking-wide uppercase">
-                <i class="fa-solid fa-shield-halved mr-2"></i> [100% Indetetável no Servidor PT]
+                <i class="fa-solid fa-briefcase mr-2"></i> Designed for busy people
             </div>
             
             <h1 class="font-serif text-6xl md:text-8xl font-black text-white mb-6 uppercase tracking-tight">
@@ -86,148 +84,164 @@
             </h1>
             
             <p class="text-xl md:text-2xl text-gray-300 font-light mb-12 max-w-2xl mx-auto leading-relaxed">
-                [O subtítulo mais apelativo aqui. Ex: O império não dorme. Automatiza as tuas farms, construções e evasões com a ferramenta mais segura do mercado.]
+                Your empire shouldn't ruin your adult life. Sleep well, perform at work, and let your personal assistant handle the repetitive grinds of Travian.
             </p>
             
             <a href="#instalar" class="inline-block bg-gradient-to-r from-roman-gold to-yellow-500 text-roman-dark font-bold text-xl px-12 py-5 rounded-lg glow-gold uppercase tracking-wider">
-                Instalar <i class="fa-solid fa-arrow-down ml-2"></i>
+                Install<i class="fa-solid fa-arrow-down ml-2"></i>
             </a>
             
             <p class="mt-6 text-sm text-gray-500">
-                <i class="fa-solid fa-check text-green-500 mr-1"></i> [Teste gratuito de 24h incluído]
+                <i class="fa-solid fa-check text-green-500 mr-1"></i> Try it free. No credit card required.
             </p>
         </div>
     </section>
 
-
-        <!-- SECÇÃO INTERMÉDIA: SCREENSHOTS -->
-    <section class="py-16 bg-[#0a0f1d]">
-        <div class="container mx-auto px-6 max-w-6xl text-center">
-            <h2 class="font-serif text-2xl font-bold text-gray-300 mb-10 tracking-widest uppercase">
-                <span class="bg-roman-red px-3 py-1 rounded text-white mr-2 text-sm">NOVO</span> Interface em Ação
+    <!-- SECÇÃO INTERMÉDIA: SCREENSHOT DE DESTAQUE -->
+    <section class="py-20 bg-[#0a0f1d] relative border-y border-white/5">
+        
+        <div class="container mx-auto px-6 max-w-4xl text-center relative z-10">
+            <h2 class="font-serif text-3xl md:text-4xl font-bold text-white mb-4">
+                Stress free automation, right in your browser
             </h2>
+            <p class="text-gray-400 max-w-2xl mx-auto mb-12">
+                See CEASAR seamlessly integrated into your game. No external software, no shady downloads. Everything runs securely within your browser.
+            </p>
             
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <!-- Print 1 -->
-                <div class="rounded-xl overflow-hidden border border-roman-gold/20 shadow-[0_0_20px_rgba(0,0,0,0.5)] glow-gold group">
-                    <!-- Troca o src="print1.jpg" pelo nome do teu ficheiro! -->
-                    <img src="assets/main.png" alt="Painel Principal do Ceasar" class="w-full h-auto object-cover transform group-hover:scale-105 transition duration-500">
-                    <div class="bg-roman-card p-4 border-t border-white/5">
-                        <p class="text-roman-gold font-bold text-sm uppercase">Painel de Auto-Farm</p>
-                    </div>
-                </div>
-
-                <!-- Print 2 -->
-                <div class="rounded-xl overflow-hidden border border-roman-gold/20 shadow-[0_0_20px_rgba(0,0,0,0.5)] glow-gold group">
-                    <!-- Troca o src="print2.jpg" pelo nome do teu ficheiro! -->
-                    <img src="assets/stats.png" alt="Configuração de Edifícios" class="w-full h-auto object-cover transform group-hover:scale-105 transition duration-500">
-                    <div class="bg-roman-card p-4 border-t border-white/5">
-                        <p class="text-roman-gold font-bold text-sm uppercase">Fila de Construção Infinita</p>
-                    </div>
-                </div>
+            <div class="relative max-w-5xl mx-auto group cursor-pointer mt-16 mb-8">
+                <img src="assets/features.png" alt="Ceasar Bot Interface" class="relative z-10 w-full h-auto drop-shadow-2xl transform group-hover:scale-105 transition duration-500 ease-out">
             </div>
+            
+            <div class="flex flex-wrap justify-center gap-4 mt-12 relative z-10">
+                <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium bg-transparent border border-white/20 text-gray-300">
+                    <i class="fa-solid fa-code text-roman-gold"></i> Native UI Integration
+                </span>
+                <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium bg-transparent border border-white/20 text-gray-300">
+                    <i class="fa-solid fa-bolt text-roman-red"></i> Instant Execution
+                </span>
+                <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium bg-transparent border border-white/20 text-gray-300">
+                    <i class="fa-solid fa-bed text-gray-400"></i> Sleep Mode
+                </span>
+            </div>
+            
         </div>
     </section>
     
-    <!-- SECÇÃO 2: FUNCIONALIDADES / SOBRE -->
+    <!-- SECÇÃO 2: FUNCIONALIDADES -->
     <section id="funcionalidades" class="py-24 bg-roman-dark border-t border-white/5">
-        <div class="container mx-auto px-6 max-w-5xl">
+        <div class="container mx-auto px-6 max-w-6xl">
             <div class="text-center mb-16">
-                <h2 class="font-serif text-3xl md:text-4xl font-bold text-roman-gold mb-4">[Conquista sem esforço]</h2>
-                <p class="text-gray-400 max-w-xl mx-auto">[Uma breve introdução sobre como o bot poupa tempo e melhora o desempenho na conta, inspirado no GrepoPlus.]</p>
+                <h2 class="font-serif text-3xl md:text-4xl font-bold text-roman-gold mb-4">The End of Sleepless Nights</h2>
+                <p class="text-gray-400 max-w-2xl mx-auto">Built specifically for Top 10 players who also have a life. CEASAR automates the exhausting tasks using state of the art algorithms, keeping your account safe while you focus on what really matters.</p>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <!-- Feature 1 -->
-                <div class="bg-roman-card p-8 rounded-xl border border-white/5 hover:border-roman-gold/30 transition duration-300">
-                    <div class="w-14 h-14 bg-roman-dark rounded-lg flex items-center justify-center text-roman-gold text-2xl mb-6 shadow-lg border border-white/5">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
+                
+                <div class="bg-roman-card p-8 rounded-xl border border-white/5 hover:border-roman-gold/30 transition duration-300 group">
+                    <div class="w-14 h-14 bg-roman-dark rounded-lg flex items-center justify-center text-roman-gold text-2xl mb-6 shadow-lg border border-white/5 group-hover:bg-roman-gold group-hover:text-roman-dark transition">
                         <i class="fa-solid fa-wheat-awn"></i>
                     </div>
-                    <h3 class="text-xl font-bold text-white mb-3">[Auto-Farm Elite]</h3>
+                    <h3 class="text-xl font-bold text-white mb-3">Smart Farms</h3>
                     <p class="text-gray-400 text-sm leading-relaxed">
-                        [Descrição detalhada. Ex: Envia as tuas listas de farm com delays humanos inteligentes. O algoritmo analisa perdas e maximiza o teu lucro por hora.]
+                        Sends farmlists with dynamic delays. It adjusts frequencies to maximize your hourly loot.
                     </p>
                 </div>
 
-                <!-- Feature 2 -->
-                <div class="bg-roman-card p-8 rounded-xl border border-white/5 hover:border-roman-gold/30 transition duration-300">
-                    <div class="w-14 h-14 bg-roman-dark rounded-lg flex items-center justify-center text-roman-gold text-2xl mb-6 shadow-lg border border-white/5">
+                <div class="bg-roman-card p-8 rounded-xl border border-white/5 hover:border-roman-gold/30 transition duration-300 group">
+                    <div class="w-14 h-14 bg-roman-dark rounded-lg flex items-center justify-center text-roman-gold text-2xl mb-6 shadow-lg border border-white/5 group-hover:bg-roman-gold group-hover:text-roman-dark transition">
                         <i class="fa-solid fa-hammer"></i>
                     </div>
-                    <h3 class="text-xl font-bold text-white mb-3">[Construtor Infalível]</h3>
+                    <h3 class="text-xl font-bold text-white mb-3">Flawless Builder</h3>
                     <p class="text-gray-400 text-sm leading-relaxed">
-                        [Descrição detalhada. Ex: Faz fila de edifícios e campos de recursos. O Ceasar constrói exatamente no segundo em que tens os recursos necessários.]
+                        Queue infinite buildings and resource fields. CEASAR patiently waits for the exact required resources or user Hero resources to build instantly.
                     </p>
                 </div>
 
-                <!-- Feature 3 -->
-                <div class="bg-roman-card p-8 rounded-xl border border-white/5 hover:border-roman-gold/30 transition duration-300">
-                    <div class="w-14 h-14 bg-roman-dark rounded-lg flex items-center justify-center text-roman-gold text-2xl mb-6 shadow-lg border border-white/5">
-                        <i class="fa-solid fa-eye-slash"></i>
+                <div class="bg-roman-card p-8 rounded-xl border border-white/5 hover:border-roman-gold/30 transition duration-300 group">
+                    <div class="w-14 h-14 bg-roman-dark rounded-lg flex items-center justify-center text-roman-gold text-2xl mb-6 shadow-lg border border-white/5 group-hover:bg-roman-gold group-hover:text-roman-dark transition">
+                        <i class="fa-solid fa-khanda"></i>
                     </div>
-                    <h3 class="text-xl font-bold text-white mb-3">[Evasão & Segurança]</h3>
+                    <h3 class="text-xl font-bold text-white mb-3">Troop Trainer</h3>
                     <p class="text-gray-400 text-sm leading-relaxed">
-                        [Descrição detalhada. Ex: Protege as tuas tropas de ataques enquanto dormes. O código corre 100% ofuscado no teu browser, sem deixar rastos.]
+                        Your Barracks and Stables will never stop. Set a target amount, and the assistant ensures your training queues are always full.
                     </p>
                 </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:w-2/3 mx-auto">
+                
+                <div class="bg-roman-card p-8 rounded-xl border border-white/5 hover:border-roman-gold/30 transition duration-300 group">
+                    <div class="w-14 h-14 bg-roman-dark rounded-lg flex items-center justify-center text-roman-gold text-2xl mb-6 shadow-lg border border-white/5 group-hover:bg-roman-gold group-hover:text-roman-dark transition">
+                        <i class="fa-solid fa-scale-balanced"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-3">Send Merchants</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed">
+                        Automatically redistributes resources between your villages. Prevent warehouse overflows and feed your capital city with zero manual effort.
+                    </p>
+                </div>
+
+                <div class="bg-roman-card p-8 rounded-xl border border-white/5 hover:border-roman-gold/30 transition duration-300 group">
+                    <div class="w-14 h-14 bg-roman-dark rounded-lg flex items-center justify-center text-roman-gold text-2xl mb-6 shadow-lg border border-white/5 group-hover:bg-roman-gold group-hover:text-roman-dark transition">
+                        <i class="fa-solid fa-mask"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-3">Hero Management</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed">
+                        Sends your hero to adventures as soon as they spawn.
+                    </p>
+                </div>
+
             </div>
         </div>
     </section>
 
     <!-- SECÇÃO 3: INSTALAÇÃO -->
     <section id="instalar" class="py-24 bg-[#0a0f1d] relative border-t border-roman-red/30">
-        <!-- Detalhe arquitetónico romano (Fundo) -->
         <div class="absolute inset-0 opacity-10 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] pointer-events-none"></div>
 
         <div class="container mx-auto px-6 max-w-3xl relative z-10">
             <div class="text-center mb-12">
-                <h2 class="font-serif text-3xl md:text-4xl font-bold text-white mb-4">Instalação Simples</h2>
-                <p class="text-gray-400">[O bot roda diretamente no teu browser. Segue os 2 passos abaixo.]</p>
+                <h2 class="font-serif text-3xl md:text-4xl font-bold text-white mb-4">Simple 2-Step Setup</h2>
+                <p class="text-gray-400">The script runs safely on your browser. Just follow the steps below.</p>
             </div>
 
             <div class="bg-roman-card rounded-2xl p-8 md:p-12 border border-roman-gold/20 shadow-2xl relative overflow-hidden">
-                <!-- Fita de Design -->
                 <div class="absolute top-0 left-0 w-2 h-full bg-roman-red"></div>
 
                 <div class="space-y-8">
-                    <!-- Passo 1 -->
                     <div class="flex items-start gap-4">
                         <div class="w-8 h-8 rounded-full bg-roman-dark border border-roman-gold text-roman-gold flex items-center justify-center font-bold shrink-0 mt-1">1</div>
                         <div>
-                            <h4 class="text-lg font-bold text-white mb-1">[Instalar Gestor de Scripts]</h4>
-                            <p class="text-gray-400 text-sm mb-3">[Precisas da extensão Tampermonkey no teu browser para rodar o Ceasar.]</p>
+                            <h4 class="text-lg font-bold text-white mb-1">Get the Script Manager (Tampermonkey)</h4>
+                            <p class="text-gray-400 text-sm mb-3">You need the official Tampermonkey extension installed on your browser to load CEASAR. Firefox browser recommended.</p>
                             <a href="https://www.tampermonkey.net/" target="_blank" class="text-roman-gold hover:text-white text-sm underline transition">
-                                <i class="fa-solid fa-arrow-up-right-from-square mr-1"></i> [Descarregar Tampermonkey]
+                                <i class="fa-solid fa-arrow-up-right-from-square mr-1"></i> Download Tampermonkey
                             </a>
                         </div>
                     </div>
 
                     <hr class="border-white/5">
 
-                    <!-- Passo 2 -->
                     <div class="flex items-start gap-4">
                         <div class="w-8 h-8 rounded-full bg-roman-dark border border-roman-gold text-roman-gold flex items-center justify-center font-bold shrink-0 mt-1">2</div>
                         <div class="w-full">
-                            <h4 class="text-lg font-bold text-white mb-1">[Adicionar o Ceasar Bot]</h4>
-                            <p class="text-gray-400 text-sm mb-5">[Com o Tampermonkey instalado, clica no botão abaixo e confirma a instalação.]</p>
+                            <h4 class="text-lg font-bold text-white mb-1">Add CEASAR to your Browser</h4>
+                            <p class="text-gray-400 text-sm mb-5">Once Tampermonkey is installed, click the button below and confirm the installation.</p>
                             
-                            <!-- BOTÃO FINAL DE INSTALAÇÃO DO SCRIPT -->
                             <a href="https://raw.githubusercontent.com/goatseasoning/ceasar-site/main/loader.user.js" class="block w-full text-center bg-roman-red hover:bg-roman-redDark text-white font-bold py-4 rounded-lg transition border border-red-500/50 shadow-[0_0_15px_rgba(114,20,34,0.5)]">
-                                <i class="fa-solid fa-download mr-2"></i> [Instalar Script Ceasar v2.0]
+                                <i class="fa-solid fa-download mr-2"></i> Install CEASAR Script
                             </a>
                             
                             <div class="mt-4 flex justify-between text-xs text-gray-500">
-                                <span>[Última atualização: Hoje]</span>
-                                <span>[Tamanho: Leve]</span>
+                                <span>Server: Online</span>
+                                <span>Size: Extremely Light</span>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
             
-            <!-- Info Adicional após instalação -->
             <div class="text-center mt-8 text-sm text-gray-400">
-                <i class="fa-solid fa-circle-info text-roman-gold mr-1"></i> [Após instalares, abre o Travian e a janela do Ceasar aparecerá automaticamente.]
+                <i class="fa-solid fa-circle-info text-roman-gold mr-1"></i> After installing, simply refresh your Travian tab and the CEASAR UI will appear. Any questions? Join our <a href="https://discord.gg/TEU_LINK_AQUI" target="_blank" class="text-roman-gold hover:text-white underline transition"><i class="fa-brands fa-discord mr-1"></i> Discord</a>.
             </div>
         </div>
     </section>
@@ -235,8 +249,8 @@
     <!-- Footer -->
     <footer class="bg-black py-8 border-t border-white/10 text-center">
         <p class="text-gray-600 text-xs">
-            © 2026 CEASAR. [Este projeto não tem filiação oficial com Travian Games GmbH.]<br>
-            [Usa com responsabilidade. Ao utilizar o Ceasar, concordas com os nossos termos.]
+            © 2026 CEASAR BOT. This project is not affiliated with or endorsed by Travian Games GmbH.<br>
+            Use responsibly. By using CEASAR, you agree to <a href="tos.html" class="underline">our terms of service.</a>
         </p>
     </footer>
 
