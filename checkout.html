@@ -88,7 +88,7 @@
         } else {
             document.getElementById('lobby-id-display').innerText = lobbyId;
 
-            // 2. Renderizar Subscrição do PayPal
+            // 2. Renderizar Subscrição do PayPal 
             paypal.Buttons({
                 style: {
                     shape: 'rect',
@@ -100,15 +100,27 @@
                     return actions.subscription.create({
                         /* AQUI: O teu Plan ID real */
                         'plan_id': 'P-8DU23656SV888420ANJRAGHQ', 
-                        
-                        /* AQUI: Passamos o LobbyId (email) para o PayPal enviar ao teu servidor via Webhook */
+                        /* AQUI: Passamos o LobbyId para o Webhook */
                         'custom_id': lobbyId 
                     });
                 },
                 onApprove: function(data, actions) {
-                    // O pagamento recorrente foi aprovado
-                    alert("Subscription Activated! Thank you.\n\nRefresh your Travian tab to see your premium status.");
-                    window.location.href = "index.html";
+                    // Substituímos o alert nativo (que bloqueia pop-ups) por uma alteração no próprio HTML
+                    const container = document.getElementById('paypal-button-container');
+                    container.innerHTML = `
+                        <div class="bg-green-500/20 text-green-400 p-4 rounded-lg border border-green-500/50 mb-4">
+                            <i class="fa-solid fa-circle-check text-2xl mb-2"></i><br>
+                            <b>Payment Successful!</b><br>
+                            Your subscription is now active.
+                        </div>
+                        <button onclick="window.close()" class="bg-roman-gold text-roman-dark font-bold py-2 px-4 rounded w-full hover:bg-yellow-400 transition">
+                            Close Window
+                        </button>
+                    `;
+                },
+                onError: function(err) {
+                    console.error('PayPal Error:', err);
+                    alert("There was an error with PayPal. Please try again.");
                 }
             }).render('#paypal-button-container');
         }
