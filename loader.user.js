@@ -2,7 +2,7 @@
 // @name         CEASAR
 // @namespace    http://tampermonkey.net/
 // @author       Goat Seasoning
-// @version      3.4
+// @version      3.5
 // @description  UI In-Game & Lobby, Cache, Manual Refresh, Sync
 // @match        *://*.travian.com/*
 // @updateURL    https://ceasarbot.com/loader.user.js
